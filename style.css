@@ -1,0 +1,154 @@
+:root {
+  --envelope-width: 40vw;
+  --envelope-height: 25vw;
+  --flap-border-color: #e6b800;
+  --flap-background-color: #ffd700;
+  --base-background-color: #ffd700;
+  --message-background-color: #ffeb85;
+  --message-font-size: 1.5vw;
+  --message-font-color: #333;
+  --border-width: 3px;
+  --message-opacity: 0;
+  --flap-transition: transform 0.5s ease-in-out;
+  --message-transition: opacity 0.5s ease-in-out;
+  --fromto-transition: opacity 0.3s ease-in-out;
+  --font-family: Arial, sans-serif;
+  --background-color: #ffee9a;
+  --font-family1: cursive;
+  --font-color1: #b89300;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: var(--background-color);
+  font-family: var(--font-family);
+}
+
+.envelope {
+  position: relative;
+  width: var(--envelope-width);
+  height: var(--envelope-height);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  border: var(--border-width) solid var(--flap-border-color);
+  box-sizing: border-box;
+}
+
+.envelope .flap-left, .envelope .flap-right {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: var(--flap-background-color);
+  border: var(--border-width) solid var(--flap-border-color);
+  box-sizing: border-box;
+  transition: var(--flap-transition);
+  z-index: 1;
+}
+
+.envelope .flap-left {
+  display: flex;
+  left: 0;
+  transform-origin: left;
+  align-items: start;
+  justify-content: center;
+}
+
+.envelope .flap-right {
+  display: flex;
+  right: 0;
+  transform-origin: right;
+  align-items: end;
+  justify-content: center;
+}
+
+.envelope .flap-left span, .envelope .flap-right span {
+  font-size: var(--message-font-size);
+  color: var(--message-font-color);
+  transition: var(--fromto-transition);
+  transition-delay: 0.3s;
+  font-family: var(--font-family1);
+  color: var(--font-color1);
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.envelope .flap-left span:nth-child(1), .envelope .flap-right span:nth-child(1) {
+  font-weight: 900;
+}
+
+.envelope.open .flap-left span, .envelope.open .flap-right span {
+  opacity: var(--message-opacity);
+  transition-delay: 0s;
+}
+
+.envelope .base {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--base-background-color);
+  border: var(--border-width) solid var(--flap-border-color);
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+.envelope .message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--message-background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--message-font-size);
+  color: var(--message-font-color);
+  opacity: 0;
+  border: var(--border-width) solid var(--flap-border-color);
+  box-sizing: border-box;
+  text-align: center;
+  transition-delay: 1s;
+
+}
+
+.envelope.open .message {
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.envelope.open .flap-left {
+  transform: rotateY(-180deg);
+}
+
+.envelope.open .flap-right {
+  transform: rotateY(180deg);
+}
+
+#message-text {
+padding: 1em;
+}
+
+/* Media Queries for different screen sizes */
+@media (max-width: 768px) {
+  :root {
+      --envelope-width: 60vw;
+      --envelope-height: 40vw;
+      --message-font-size: 4vw;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+      --envelope-width: 80vw;
+      --envelope-height: 50vw;
+      --message-font-size: 5vw;
+  }
+}
